@@ -27,9 +27,8 @@ CTRunArrayTest >> newRunArray [
 { #category : #running }
 CTRunArrayTest >> setUp [ 
 	super setUp.
-	runArray := #($a $b $b $c $c $c $d $d $d $d) as: self classToTest.
+	runArray := CTRunArray newFrom: #($a $b $b $c $c $c $d $d $d $d).
 	runArrayNumbers := self classToTest new: 5 withAll: 2.
-
 ]
 
 { #category : #'tests - instance creation' }
@@ -73,7 +72,6 @@ CTRunArrayTest >> testAddAddsAsLastElement [
 
 { #category : #'tests - adding' }
 CTRunArrayTest >> testAddFirst [
-
 	runArray addFirst: $z.
 	self assert: runArray asArray  equals: #($z $a $b $b $c $c $c $d $d $d $d)
 ]
@@ -330,7 +328,7 @@ CTRunArrayTest >> testCopyUpToLast [
 	"#($a $b $b $c $c $c $d $d $d $d)"
 
 	| rArray rArray2 |
-	rArray := #($a $b $b $c $c $c $d $d $a $d $d)as: self classToTest.
+	runArray := CTRunArray newFrom: #($a $b $b $c $c $c $d $d $d $d).
 	rArray2 := rArray copyUpToLast: $a.
 	self assert: rArray2 runs equals: #(1 2 3 2).
 	self assert: rArray2 values equals: #($a $b $c $d)
@@ -487,8 +485,9 @@ CTRunArrayTest >> testIsSorted [
 { #category : #'tests - testing' }
 CTRunArrayTest >> testIsSortedBy [
 
-	self assert: ((#(1 1 2 2 3 3 3 3) as: self classToTest) isSortedBy: [:a :b | a <= b ]).
-	self assert: ((#(1 1 2 2 3 3 3 3) as: self classToTest) reversed isSortedBy: [:a :b | b <= a ]).
+	runArray := CTRunArray newFrom: #(1 1 2 2 3 3 3 3).
+	self assert: (runArray isSortedBy: [:a :b | a <= b ]).
+	self assert: (runArray reversed isSortedBy: [:a :b | b <= a ]).
 ]
 
 { #category : #'tests - accessing' }
@@ -501,7 +500,6 @@ CTRunArrayTest >> testLast [
 
 { #category : #'tests - instance creation' }
 CTRunArrayTest >> testNew [
-	
 	| array |
 	array := self classToTest new.
 	self assert: array size equals: 0
@@ -717,7 +715,7 @@ CTRunArrayTest >> testRunArrayRunsSize [
 CTRunArrayTest >> testRunLengthAt [
 	
 	| array |
-	array := #($a $b $b $c $c $c $d $d) as: self classToTest.
+	array := CTRunArray newFrom: #($a $b $b $c $c $c $d $d).
              "1   2  3  4  5  6  7  8 "	
 	self assert: (array runLengthAt: 1) equals: 1.
 	"there is only on $a to go"
@@ -801,7 +799,7 @@ CTRunArrayTest >> testValues [
 CTRunArrayTest >> testWithStartStopAndValueDo [
 	
 	| array elements startStops |
-	array := #($a $b $b $c $c $c $d $d) as: CTRunArray.
+	array := self classToTest newFrom: #($a $b $b $c $c $c $d $d).
 	elements := OrderedCollection new.
 	startStops := OrderedCollection new.
 	array withStartStopAndValueDo: [:start :stop :value | elements add: value. startStops add: start->stop].
