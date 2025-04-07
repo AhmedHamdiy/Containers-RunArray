@@ -328,7 +328,7 @@ CTRunArrayTest >> testCopyUpToLast [
 	"#($a $b $b $c $c $c $d $d $d $d)"
 
 	| rArray rArray2 |
-	runArray := CTRunArray newFrom: #($a $b $b $c $c $c $d $d $d $d).
+	rArray := CTRunArray newFrom: #($a $b $b $c $c $c $d $d $a $d $d).
 	rArray2 := rArray copyUpToLast: $a.
 	self assert: rArray2 runs equals: #(1 2 3 2).
 	self assert: rArray2 values equals: #($a $b $c $d)
